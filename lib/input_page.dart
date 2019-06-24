@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'gender_selector.dart';
 import 'my_container.dart';
 
+enum Gender { male, female }
 final inactive_card_color = Color.fromRGBO(29, 29, 46, 0.5);
 final active_card_color = Color.fromRGBO(29, 29, 46, 1);
 
@@ -13,25 +14,7 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  Color male_card_color = inactive_card_color;
-  Color female_card_color = inactive_card_color;
-
-  void update_color(int gender) {
-    //1-male 2-female
-    setState(() {
-      male_card_color = gender == 1
-          ? (male_card_color == inactive_card_color
-              ? active_card_color
-              : inactive_card_color)
-          : male_card_color;
-
-      female_card_color = gender == 2
-          ? (female_card_color == inactive_card_color
-              ? active_card_color
-              : inactive_card_color)
-          : female_card_color;
-    });
-  }
+  Gender selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +30,14 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      update_color(1);
+                      setState(() {
+                        selectedGender = Gender.male;
+                      });
                     },
                     child: My_Container(
-                      colour: male_card_color,
+                      colour: selectedGender == Gender.male
+                          ? active_card_color
+                          : inactive_card_color,
                       child: Gender_Selector('MALE', FontAwesomeIcons.male),
                     ),
                   ),
@@ -58,10 +45,14 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      update_color(2);
+                      setState(() {
+                        selectedGender = Gender.female;
+                      });
                     },
                     child: My_Container(
-                      colour: female_card_color,
+                      colour: selectedGender == Gender.female
+                          ? active_card_color
+                          : inactive_card_color,
                       child: Gender_Selector('FEMALE', FontAwesomeIcons.female),
                     ),
                   ),

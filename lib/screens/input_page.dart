@@ -1,9 +1,12 @@
+import 'package:bmi_calculator/bl/bmi_calc.dart';
+import 'package:bmi_calculator/components/bottom_button.dart';
+import 'package:bmi_calculator/components/gender_selector.dart';
+import 'package:bmi_calculator/components/my_container.dart';
+import 'package:bmi_calculator/screens/results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'const.dart';
-import 'gender_selector.dart';
-import 'my_container.dart';
+import '../const.dart';
 
 enum Gender { male, female }
 
@@ -182,12 +185,14 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            color: kBtm_cnt_color,
-            margin: EdgeInsets.only(top: 10.0),
-//            width: double.infinity,
-            height: 80.0,
-          )
+          BottomButton('CALCULATE BMI', () {
+            BmiCalc bmiCalc = BmiCalc(height, weight);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ResultsPage(bmiCalc.calc_bmi(),
+                        bmiCalc.to_text(), bmiCalc.to_desc())));
+          }, k_calc_txt_style)
         ],
       ),
     );

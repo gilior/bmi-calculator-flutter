@@ -15,6 +15,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
   int height = 180;
+  int weight = 60;
+  int age = 30;
 
   @override
   Widget build(BuildContext context) {
@@ -105,12 +107,76 @@ class _InputPageState extends State<InputPage> {
               children: <Widget>[
                 Expanded(
                   child: My_Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'WEIGHT',
+                          style: kLbl_txt_stl,
+                        ),
+                        Text(
+                          weight.toString(),
+                          style: kNmb_cnt_color,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundIconButton(FontAwesomeIcons.plus, () {
+                              setState(() {
+                                weight++;
+                              });
+                            }),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            RoundIconButton(FontAwesomeIcons.minus, () {
+                              setState(() {
+                                weight--;
+                              });
+                            }),
+                          ],
+                        ),
+                      ],
+                    ),
                     colour: kInactive_card_color,
                   ),
                 ),
                 Expanded(
                   child: My_Container(
                     colour: kInactive_card_color,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'AGE',
+                          style: kLbl_txt_stl,
+                        ),
+                        Text(
+                          age.toString(),
+                          style: kNmb_cnt_color,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RoundIconButton(FontAwesomeIcons.plus, () {
+                              setState(() {
+                                age++;
+                              });
+                            }),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            RoundIconButton(FontAwesomeIcons.minus, () {
+                              setState(() {
+                                age--;
+                              });
+                            }),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -137,5 +203,29 @@ class _InputPageState extends State<InputPage> {
     setState(() {
       selectedGender = Gender.female;
     });
+  }
+}
+
+class RoundIconButton extends StatelessWidget {
+  final IconData icon;
+  final Function onClickFunc;
+
+  RoundIconButton(this.icon, this.onClickFunc);
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      elevation: 0.0,
+      child: Icon(icon),
+      shape: CircleBorder(),
+      fillColor: Colors.blueGrey,
+      constraints: BoxConstraints.tightFor(
+        width: 56.0,
+        height: 56.0,
+      ),
+      onPressed: () {
+        onClickFunc();
+      },
+    );
   }
 }
